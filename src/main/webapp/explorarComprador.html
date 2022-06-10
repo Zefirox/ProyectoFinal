@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/explorarComprador.css">
+  <title>Explorar</title>
+</head>
+
+<body>
+
+  <div class="TextoI">
+    <h3>Imagenes</h3>
+  </div>
+
+  <div class="parent" id="container">
+      <script>
+        let container = document.getElementById("container");
+
+        fetch("api/arts")
+              .then(response => response.json())
+              .then(jsondata => {
+                  jsondata.map(register=>{
+                    let card = document.createElement("div");
+
+                    let image = document.createElement("img");
+                    image.src = "./"+register["collection"]+"/"+register["filename"];
+                    image.width = 200;
+
+                    let title = document.createElement("p");
+                    title.innerHTML = "Titulo: "+register["title"];
+
+                    let creator =document.createElement("p");
+                    creator.innerHTML = "Creador: "+register["usernamecreator"];
+
+                    let price = document.createElement("p");
+                    price.innerHTML = "Precio: "+register["price"]+" Fcoins";
+
+                    let collection = document.createElement("p");
+                    collection.innerHTML = "Coleccion: "+register["collection"];
+
+                    card.appendChild(image);
+                    card.appendChild(title);
+                    card.appendChild(creator);
+                    card.appendChild(price);
+                    card.appendChild(collection);
+
+                    let artPrice = document.createElement("input");
+                    artPrice.type = "hidden";
+                    artPrice.name = "price"
+                    artPrice.value =register["price"];
+
+                    let userBuyer = document.createElement("input");
+                    userBuyer.type = "hidden";
+                    userBuyer.name = "userBuyer";
+                    userBuyer.value = localStorage.getItem('user');
+
+                    let submit = document.createElement("button");
+                    submit.type = "submit";
+                    submit.innerHTML = "Comprar";
+                    submit.style = "width:80px; height:40px;";
+
+                    let comprar = document.createElement("form");
+                    comprar.appendChild(artPrice);
+                    comprar.appendChild(userBuyer);
+                    comprar.appendChild(submit);
+                    comprar.onsubmit = async (e)=>{
+                      e.preventDefault();
+                      const formData = new FormData(comprar);
+
+                      let response = await fetch('./api/users/buy', {
+                        method: 'PUT',
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: new URLSearchParams(formData),
+                      });
+
+                      let result = await response.json();
+
+                      if(response.ok){
+                        localStorage.setItem('fcoins',result["fcoins"]);
+                        alert('Compra realizada con exito');
+                        window.location.href = "homeComprador.html";
+                      }else {
+                        alert('Saldo Insuficiente para comprar esta obra');
+                      }
+                    }
+
+                    let formdiv = document.createElement("div");
+                    formdiv.appendChild(comprar);
+                    card.appendChild(formdiv);
+
+                    let like = document.createElement("button");
+                    like.style = "width:80px; height:40px; margin-top:10px;";
+                    like.innerHTML = "Dar \"Like\"";
+                    card.appendChild(like);
+
+                    container.appendChild(card);
+                  })
+              })
+      </script>
+  </div>
+  <div>
+    <button href="./homeComprador.html" style="width:80px; height:40px;">Volver</button>
+  </div>
+
+</body>
+
+</html>
