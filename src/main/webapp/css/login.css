@@ -1,0 +1,29 @@
+body{
+    background-image: url("https://unsplash.com/photos/M6ZR-9tP6Z4");
+
+}
+
+.container{
+    background-color: rgba(255, 255, 255, 0.755);
+    width: fit-content;
+    height: fit-content;
+    margin-top: 150px;
+    border-radius: 10px;
+}
+
+.container a{
+    text-decoration: none;
+}
+
+.ingresar{
+    width: 500px;
+    height: 300px;
+}
+
+.form-label{
+    margin-top: 10px;
+}
+
+.btn-outline-dark{
+    margin-left: 10px;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/crear.css">
+  <title>Crear</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <form class="crear" enctype="multipart/form-data">
+      <div class="subir">
+        <label for="formFile" class="form-label">Selecciona el archivo que quieras subir</label>
+        <input class="form-control" type="file" id="formFile" name="image">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Nombre de la imagen</label>
+        <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">Ingresa el nombre con el que otros usuarios podran identificar tu arte
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Precio de tu arte</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input type="text" name="price" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+        </div>
+        <div id="emailHelp" class="form-text">Define el valor de tu pieza de arte</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Coleccion de tu arte</label>
+        <input type="text" name="coleccion" class="form-control">
+        <div id="emailHelp" class="form-text">Ingresa el nombre de la coleccion a la cual pertenece tu arte</div>
+      </div>
+      <button type="submit" class="btn btn-outline-dark">Submit</button>
+      <button type="submit" formaction="homeArtista.html" class="btn btn-outline-dark">Volver</button>
+    </form>
+    <script>
+      const form = document.querySelector("form")
+      let user = localStorage.getItem('user');
+
+      form.onsubmit = async (e)=> {
+        e.preventDefault()
+        const formData = new FormData(form);
+
+        let response = await fetch('./api/arts/'+user, {
+          method: 'POST',
+          body: formData,
+        });
+        let result = await response.text();
+        if (response.ok){
+          alert(result);
+          window.location.href = "homeArtista.html";
+        }else{
+          alert('Informacion erronea, intente nuevamente')
+        }
+      }
+    </script>
+  </div>
+</body>
+
+</html>

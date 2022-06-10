@@ -1,0 +1,22 @@
+body{
+    background-image: url(Assets/tezos-a6FNOYGWj6k-unsplash.jpg);
+    
+}
+
+.container{
+    justify-content: center;
+    background-color: white;
+    height: 300px;
+    width: 400px;
+    margin-top: 50px;
+    border-radius: 10px;
+}
+
+.form-label{
+    
+    margin-top: 10px;
+}
+
+.btn{
+    margin-top: 20px;
+}

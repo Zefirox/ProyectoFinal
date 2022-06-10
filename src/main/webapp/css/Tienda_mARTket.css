@@ -1,0 +1,17 @@
+body {
+    font-size: 20px;
+    margin: 0;
+    background-color: #7e7e7e;
+}
+
+.logo {
+    height: 20px;
+    width: 20px;
+}
+
+
+.imgIntro {
+    background-image: url(../Assets/fondoIntro.jpg);
+}
+
+
